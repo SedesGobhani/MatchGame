@@ -1,0 +1,63 @@
+
+html {
+  font-size: 14px; /* rem base font */
+}
+
+body {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 14px; /* em base font */
+  background-color: rgb(255,242,242);
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: rgb(32, 64, 86);
+}
+
+p {
+  font-size: 1rem;
+  color: rgb(74,74,74);
+}
+
+.card {
+  background-color: rgb(32,64,86); /* unselected */
+  border: 4px solid #ffffff;
+  border-radius: 8px;
+
+  font-weight: 900;
+  font-size: 7rem;
+  color: rgb(255,255,255);
+
+  /* height: 12.5rem; */
+  height: 4rem; /* Switch back after debugging */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+/*  Color Specs:
+Unselected (dark blue-green):
+background-color: rgb(153,153,153);
+color: N/A
+
+Selected (full color):
+background-color: 1 of 8 colors
+color: rgb(256,256,256);
+
+Matched (greyed out):
+background-color: rgb(32,64,86);
+color: rgb(204,204,204);
+*/
+
+
+.card:hover {
+  cursor: pointer;
+}
+
+.container {
+  /* background-color: lightgreen; */
+  padding-top: 5.25rem;
+}
