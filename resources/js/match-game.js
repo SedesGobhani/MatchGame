@@ -1,7 +1,7 @@
 
 var MatchGame = {};
 
-/*
+/* ==================================================================
   Sets up a new game after HTML document has loaded.
   Renders a 4x4 board of cards.
 */
@@ -16,7 +16,7 @@ $(document).ready(function() {
 MatchGame.deal();
 });
 
-/*
+/* ==================================================================
   Generates and returns an array of matching card values.
   https://jsfiddle.net/MarkSeagoe/8ev0v6oe/
 */
@@ -35,14 +35,14 @@ MatchGame.generateCardValues = function () {
   return random;
 };
 
-/*
+/* ==================================================================
   Converts card values to jQuery card objects and adds them to the supplied game
   object.
 */
 
 MatchGame.renderCards = function(cardValues, $game) {
   $game.data({
-    'flipped': []
+    'flipped_array': []
   });
   var color =  [25,55,90,160,220,265,310,360];
   // $game.children('.card').remove();
@@ -52,7 +52,7 @@ MatchGame.renderCards = function(cardValues, $game) {
     $card.data({ // initial values
         'value': cardValues[n],
         'flipped': false,
-        'color': 'hsl(' + color[cardValues[n-1]] + ', 85%, 65%)'
+        'color': 'hsl(' + color[cardValues[n]-1] + ', 85%, 65%)'
       });
     $game.append($card);
   }
@@ -63,7 +63,7 @@ MatchGame.renderCards = function(cardValues, $game) {
   });
 };
 
-/*
+/* ==================================================================
   Flips over a given card and checks to see if two cards are flipped over.
   Updates styles on flipped cards depending whether they are a match or not.
  */
@@ -74,11 +74,10 @@ MatchGame.flipCard = function($card, $game) {
     return; //do nothing
   }
 
-  var flipped = $game.data('flipped'); // this gets used a lot
+  var flipped_array = $game.data('flipped_array'); // this array gets used a lot
 
   $card.data('flipped', true); // flipped = true
   $card.text($card.data('value'));
-  flipped.push($card); // add card to flipped array
   $card.css(  // update appearance
     'background-color',
     $card.data('color')  // flipped color
@@ -88,35 +87,60 @@ MatchGame.flipCard = function($card, $game) {
     'rgb(256,256,256)'
   )
 
-  if( flipped.length === 1) { // if no other cards flipped
+  if( flipped_array.length === 0) { // if no other cards flipped
+    flipped_array.push($card); // add card to flipped array
     return; // do nothing
   }
 
-  for (var n = 0; n < 2; n++) { // for each card in array
-    if( flipped[0] === flipped[1]) { // same value
-      flipped[n].css(  // update appearance
+  // Unfortunately I can used the array anymore. I have
+  // to copy card pointers because array is going away
+  // before delayed operations that use its ref contents.
+  var $card2 = flipped_array[0];
+  $game.data('flipped_array', []); // empty array
+
+  // If two flipped cards match
+  if( $card.data('value') === $card2.data('value')) { // same value
+    window.setTimeout(function() { // other flipped card value different
+      $card.css(  // update appearance
         'background-color',
-        'rbg(32,64,86)'  // matched bg color
+        'rgb(153,153,153)'  // matched bg color
       );
-      flipped[n].css(
+      $card.css(
         'color',
         'rgb(204,204,204)' // matched fg color
       );
-    } else { // other flipped card value different
-      flipped[n].css(  // update appearance
+      $card2.css(  // update appearance
         'background-color',
-        'rgb(153,153,153)'  // unflipped bg color
+        'rgb(153,153,153)'  // matched bg color
       );
-      flipped[n].text('');
-      flipped[n].data('flipped', false);
-    }
+      $card2.css(
+        'color',
+        'rgb(204,204,204)' // matched fg color
+      );
+    }, 300)
+  // If two flipped cards don't match
+  } else {
+    window.setTimeout(function() { // other flipped card value different
+      $card.css(  // update appearance
+        'background-color',
+        'rgb(32,64,86)'  // unflipped bg color
+      );
+      $card.text('');
+      $card.data('flipped', false);
+      $card2.css(  // update appearance
+        'background-color',
+        'rgb(32,64,86)'  // unflipped bg color
+      );
+      $card2.text('');
+      $card2.data('flipped', false);
+    }, 400);
   }
-  $game.data('flipped', []); // empty flipped array
+
 };
 
 /*
 Possible improvements:
-
+See spec for anything missing from requirements.
 Time delay (1/2 second) to transition matched cards to grey.
 Reset button (instead of browser refresh).
 Score function.

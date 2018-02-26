@@ -40,7 +40,7 @@ p {
 
 /*  Color Specs:
 Unselected (dark blue-green):
-background-color: rgb(153,153,153);
+background-color: rgb(32,64,86);
 color: N/A
 
 Selected (full color):
@@ -48,7 +48,7 @@ background-color: 1 of 8 colors
 color: rgb(256,256,256);
 
 Matched (greyed out):
-background-color: rgb(32,64,86);
+background-color: rgb(153,153,153);
 color: rgb(204,204,204);
 */
 
