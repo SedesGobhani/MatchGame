@@ -29,13 +29,36 @@ p {
   font-size: 7rem;
   color: rgb(255,255,255);
 
-  /* height: 12.5rem; */
-  height: 6rem; /* Switch back after debugging */
+  height: 12.5rem;
 
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+
+.button {
+  font-size: 2rem;
+  display: block;
+  background-color: rgb(32,64,86);
+  color: rgb(255,242,242);
+  text-align: center;
+  width: auto;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.button:hover {
+  background-color: rgb(50,80,100);
+  color: white;
+}
+
+.button:active {
+  background-color: black;
+}
+
+.button span:hover {
+  cursor:default;
 }
 
 /*  Color Specs:
@@ -59,6 +82,5 @@ color: rgb(204,204,204);
 
 .container {
   /* background-color: lightgreen; */
-  /* padding-top: 5.25rem; */
-  padding-top: 2rem; /* Debug only - switch back later */
+  padding-top: 5.25rem;
 }

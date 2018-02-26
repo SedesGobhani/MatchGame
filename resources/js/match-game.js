@@ -128,7 +128,15 @@ MatchGame.flipCard = function($card, $game) {
     }, 400);
   }
 
+  // card clicked event listener
+  $('.button').click(function() { // listen on all Cards
+    MatchGame.deal();  // act only on this one
+  });
+
 };
+
+
+
 
 /*
 Possible improvements:
@@ -137,5 +145,15 @@ Time delay (1/2 second) to transition matched cards to grey.
 Reset button (instead of browser refresh).
 Score function.
 Sound. No, actually not this.
+
+Code Academy suggested additions:
+Indicate that the user won when all pairs have been found
+Add a "Restart Game" button
+Only allow two cards to be visible at a time (currently the setTimeout allows users to click really quickly and see a few)
+Change card values to non-number values
+Add score or time
+Allow user to select from multiple board sizes
+Add sound effects
+Add flipping animations
 
 */
