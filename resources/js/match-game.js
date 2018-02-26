@@ -41,11 +41,8 @@ MatchGame.generateCardValues = function () {
 */
 
 MatchGame.renderCards = function(cardValues, $game) {
-  $game.data({
-    'flipped_array': []
-  });
+  $game.data('card', 0);
   var color =  [25,55,90,160,220,265,310,360];
-  // $game.children('.card').remove();
   $game.empty();
   for(var n = 0; n < cardValues.length; n++) {
     var $card = $('<div class="card col-xs-3"></div>');
@@ -74,8 +71,6 @@ MatchGame.flipCard = function($card, $game) {
     return; //do nothing
   }
 
-  var flipped_array = $game.data('flipped_array'); // this array gets used a lot
-
   $card.data('flipped', true); // flipped = true
   $card.text($card.data('value'));
   $card.css(  // update appearance
@@ -87,16 +82,13 @@ MatchGame.flipCard = function($card, $game) {
     'rgb(256,256,256)'
   )
 
-  if( flipped_array.length === 0) { // if no other cards flipped
-    flipped_array.push($card); // add card to flipped array
+  if( $game.data('card') === 0) { // if no other cards flipped
+    $game.data('card', $card); // add card to flipped array
     return; // do nothing
   }
 
-  // Unfortunately I can used the array anymore. I have
-  // to copy card pointers because array is going away
-  // before delayed operations that use its ref contents.
-  var $card2 = flipped_array[0];
-  $game.data('flipped_array', []); // empty array
+  var $card2 = $game.data('card'); // handy handle
+  $game.data('card', 0);
 
   // If two flipped cards match
   if( $card.data('value') === $card2.data('value')) { // same value
